@@ -237,4 +237,4 @@ if __name__ == "__main__":
         os.kill(os.getpid(), signal.SIGKILL)
     window.events.closed += exit
 
-    webview.start(debug=True)
+    webview.start()
