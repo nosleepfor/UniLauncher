@@ -7,6 +7,7 @@
 а сам запуск игры через minecraft_launcher_lib
 имеет возможность входа через ely.by
 
+<img src='image.png'>
 
 # Установка
 ```bash
