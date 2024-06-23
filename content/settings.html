@@ -1,0 +1,115 @@
+<!DOCTYPE HTML>
+<html lang="ru">
+    <head>
+        <title>
+            Main
+        </title>
+        <link rel="stylesheet" href="main.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <div class="loader" style='display:none;'>
+            <div class="loader-thing"><div class="load"></div></div>
+        </div>
+        
+        <div class="s-container">
+            <div style='display: flex; flex-direction: row;'><img src="left-arrow.png" color="white" width="50" height="50" style="margin-top: 10px; margin-right: 10px; cursor: pointer;" onclick="location.href='/main_page.html'">
+            <h1>Настройки</h1>
+            </div>
+            
+            <input type="checkbox" name="elyby" id="elyby" style="margin-left:0">
+            <label for="elyby">Система скинов ely.by ( <div class="tooltip">
+                authlib
+                <span class="tooltiptext">Authlib - .jar файл который меняет систему авторизации на определенную (в данном случае на систему скинов ely.by)</span>
+            </div> )</label><br>
+            <input type="checkbox" name="elyby" id="csl" style="margin-left:0">
+            <label for="elyby">Система скинов ely.by (
+                <div class="tooltip">
+                    CustomSkinLoader
+                    <span class="tooltiptext">CustomSkinLoader  - мод который также может загружать ваш скин с помощью системы скинов ely.by (его нужно установить в папку ваших модов, используйте если вариант с authlib не работает)</span>
+                </div> )
+            </label><br>
+            <label for="gb">Выделенная память</label><br>
+            
+            
+            <div style="display: flex; flex-direction: row;"><input type="range" id="maxmem" name="gb" min="1">
+            <p style="margin-left: 5px" id="selectedmem">1Gb</p></div>
+
+            <br>
+            
+            
+            
+            <input type="checkbox" id="custom_res" name="custom_res" style="margin-left:0">
+            <label for="custom_res" style>Кастомное разрешение</label>
+            <br>
+            <input type="number" placeholder="x" min="100" max="3000" id="resx">
+            <input type="number" placeholder="y" min="100" max="3000" id="resy">
+            <br>
+            <button class="button-filled" onclick="eel.show_mcdir()">Папка игры</button>
+            <br>
+            <button class="button-filled" onclick="eel.new_bg()">Выбрать фон</button>
+        </div>
+        
+        <script src="/eel.js"></script>
+        <script>
+            eel.expose(reload)
+            function reload() {
+                location.reload()
+            }
+
+            eel.get_config()().then((config) => {
+                window.config = config
+                document.getElementById('elyby').checked = config['ely_by_patch']
+                document.getElementById('csl').checked = config.customskinloader
+                document.getElementById('maxmem').value = config.mem
+                document.getElementById('resx').value = config.custom_resolution.x
+                document.getElementById('resy').value = config.custom_resolution.y
+                document.getElementById('custom_res').value = config.custom_resolution.enabled
+                document.getElementById('selectedmem').innerText = `${config.mem}Gb`
+                
+            
+                eel.max_mem()().then((mem) => {
+                    document.getElementById('maxmem').max = mem
+                    
+                    document.getElementsByClassName('loader')[0].style.display = 'none';
+                })
+                
+            })
+
+
+
+            document.getElementById('elyby').oninput = (e) => {
+                window.config['ely_by_patch'] = e.target.checked
+                document.getElementById('csl').checked=false
+                window.config['customskinloader'] = false
+                eel.set_config(window.config)
+            }
+            document.getElementById('csl').oninput = (e) => {
+                window.config['customskinloader'] = e.target.checked
+                document.getElementById('elyby').checked=false
+                window.config['ely_by_patch'] = false
+                eel.set_config(window.config)
+            }
+            document.getElementById('maxmem').oninput = (e) => {
+                window.config['mem'] = e.target.value
+                document.getElementById('selectedmem').innerText = `${e.target.value}Gb`
+                eel.set_config(window.config)
+            }
+
+            document.getElementById('custom_res').oninput = (e) => {
+                window.config['custom_resolution']['enabled'] = e.target.checked
+                eel.set_config(window.config)
+            }
+            document.getElementById('resx').oninput = (e) => {
+                window.config['custom_resolution']['x'] = e.target.value
+                eel.set_config(window.config)
+            }
+            document.getElementById('resy').oninput = (e) => {
+                window.config['custom_resolution']['y'] = e.target.value
+                eel.set_config(window.config)
+            }
+
+        </script>
+        
+    </body>
+</html>

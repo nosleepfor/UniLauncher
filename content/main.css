@@ -1,0 +1,247 @@
+@font-face {
+    font-family: UniSans;
+    src: url(Uni\ Sans\ Heavy.otf);
+}
+
+body {
+    font-family: Arial, sans-serif;
+    color:white;
+    padding:0;
+    margin:0;
+    height: 100%;
+    width: 100%;
+    background-image: url('bg.jpg'); 
+    background-color: rgb(31, 31, 31);
+  
+
+    background-size: cover;
+    
+
+    background-position: center;
+}
+
+.s-container {
+    padding:5px
+}
+
+html {
+    padding:0;
+    margin:0;
+    height: 100%;
+    width: 100%;
+}
+h1 {
+    font-family: 'UniSans';
+}
+
+.input-filled {
+    padding: 7px 10px;
+    font-size: 18px;
+    background-color: rgb(53,53,53);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    
+}
+
+.input-filled::placeholder {
+    color:rgb(189, 189, 189)
+}
+
+
+.sinput-filled {
+    padding: 7px 10px;
+    background-color: rgb(53,53,53);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    
+}
+
+
+.hint {
+    color:rgb(134, 134, 134)
+}
+
+.button-filled {
+    background-color: blueviolet;
+    color: white;
+    font-size: 18px;
+    border:none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-top:15px;
+}
+
+.bottom-hint {
+    bottom: 0;
+    position: absolute;
+}
+
+.valid-err {
+    color:red;
+    display: none;
+}
+
+.left-side-panel {
+    background-color: rgba(17, 17, 17, 0.644);
+    display: flex;
+    flex-direction: column;
+    backdrop-filter: blur(10px);
+    width:300px;
+    height:750px;
+}
+
+.bottom-panel {
+    background-color: rgba(36, 36, 36, 0.575);
+    display: flex;
+    flex-direction: row;
+    backdrop-filter: blur(10px);
+    width:100%;
+    height:80px;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    
+}
+
+.icon {
+    margin: 10px;
+    cursor: pointer;
+}
+
+.nickname {
+    text-align: center;
+}
+
+select {
+    width:200px;
+    appearance: none;
+    margin:0 auto;
+    margin-top: 50px;
+    padding: 5px 10px;
+    background-color: rgb(53, 53, 53);
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+input[type="checkbox"] {
+    appearance: none;
+    border-radius: 5px;
+    margin:0;
+    padding:15px;
+    background-color:blueviolet;
+    margin-left:5px;
+
+}
+
+input[type="range"] {
+    border-radius: 5px;
+    margin:0;
+    padding:15px;
+    --webkitcolor:blueviolet;
+    margin-left:5px;
+
+}
+
+input[type="number"] {
+
+    appearance: none;
+    margin:0 auto;
+    padding: 5px 10px;
+    background-color: rgb(53, 53, 53);
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+
+input[type="checkbox"]:checked {
+    appearance: none;
+    border-radius: 5px;
+    padding:15px;
+    margin:0;
+    background-color:rgb(199, 138, 255);
+    margin-left:5px;
+
+}
+
+label {
+    margin-top: 8px;
+    margin-left: 5px;
+    position: absolute;
+}
+
+.loader {
+    width: 100%;
+    height:100%;
+    z-index: 100;
+    position: absolute;
+    
+    background-color: black;
+    top:50;
+    left: 50;
+    transform: translate(50, 50);
+}
+
+.loader-thing {
+    top: 50%;
+    
+    left: 50%;
+    
+    position: absolute;
+    z-index: 101;
+    
+
+    transform: translate(-50%, -50%);
+}
+
+.load {
+    animation: rotateAnimation 1s linear infinite;
+    width:100px;
+    height: 100px;
+    background-color: white;
+}
+
+@keyframes rotateAnimation {
+	from {transform: rotateY(0deg)}
+	to {transform: rotateY(360deg)}
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+  }
+  
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 400px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    top: -5px;
+    left: 110%;
+  }
+  
+  .tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent rgb(70, 70, 70) transparent transparent;
+  }
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+  }

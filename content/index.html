@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html lang="ru">
+    <head>
+        <title>
+            Login
+        </title>
+        <link rel="stylesheet" href="main.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <h1>Войти в аккаунт</h1>
+        
+        <div id="enter" style="margin-bottom: 10px;">
+            <input id='username' type="text" placeholder="Ваш никнейм" class="input-filled">
+            <br>
+            <button id="login-button" class="button-filled">Войти</button>
+            <p class="valid-err" id="valid-err">Никнейм должен содержать только латинские буквы, _, цифры</p>
+        </div>
+        <div id="enter-elyby" style="margin-bottom: 10px; display: none;">
+            <p class='hint'>У вас должен быть аккаунт на ely.by</p>
+            <input id='ely-username' type="text" placeholder="Ваш никнейм" class="input-filled">
+            <br>
+            <br>
+            <input id='passw' type="password" placeholder="Ваш пароль" class="input-filled">
+            <br>
+            
+            <button id="login-button-elyby" class="button-filled">Войти</button>
+            
+            <p class="valid-err" id="valid-err2">Никнейм должен содержать только латинские буквы, _, цифры</p>
+        </div>
+        
+        <input type="checkbox" name="elyby_enter" id="elyby_enter">
+        <label for="elyby_enter">Вход elyby</label>
+        <p class="bottom-hint">
+            0.1-beta
+        </p>
+        <script src="/eel.js"></script>
+        <script>
+            document.getElementById('login-button').addEventListener('click', () => {
+                if (!/^[a-zA-Z0-9]+$/.exec(document.getElementById('username').value)) {
+                    var valid_err = document.getElementById('valid-err')
+                    valid_err.style.display='block';
+                } else {
+                    eel.login(document.getElementById('username').value);
+                }
+            })
+            document.getElementById('login-button-elyby').addEventListener('click', () => {
+                if (!/^[a-zA-Z0-9]+$/.exec(document.getElementById('ely-username').value)) {
+                    var valid_err = document.getElementById('valid-err2')
+                    valid_err.style.display='block';
+                } else {
+                    eel.elylogin(document.getElementById('ely-username').value, document.getElementById('passw').value);
+                }
+            })
+            document.getElementById('elyby_enter').oninput = (e) => {
+                if (e.target.checked) {
+                    document.getElementById('enter').style.display = 'none'
+                    document.getElementById('enter-elyby').style.display = 'block'
+                } else {
+                    document.getElementById('enter').style.display = 'block'
+                    document.getElementById('enter-elyby').style.display = 'none'
+                }
+            }
+        </script>
+    </body>
+</html>

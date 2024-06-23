@@ -1,0 +1,113 @@
+<!DOCTYPE HTML>
+<html lang="ru">
+    <head>
+        <title>
+            Main
+        </title>
+        <link rel="stylesheet" href="main.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <div class="loader" style="display: none;">
+            <div class="loader-thing"><div class="load"></div></div>
+        </div>
+        <div class="loader" style="display: none;">
+            <div class="loader-thing"><div class="load" style="margin:0 auto;"></div>
+            <p style="text-align: center; z-index:1000;" id="process">Process</p></div>
+        </div>
+        <div class="container">
+            <div class="left-side-panel">
+                <div style="display: flex; flex-direction: row; margin: 0 auto;">
+                    <h3 id='nickname' class='username'>Huy </h3>
+                    <canvas id="myCanvas" width="50" height="60" style="margin-left: 10px; cursor: pointer;" onclick="eel.webbrowser_open('https://ely.by')"></canvas>
+                </div>
+                <select id="versions">
+                    
+                </select>
+                <button class="button-filled" style="margin-top:300px; width: 200px; margin-inline: auto;" id="play">Играть</button>
+            </div>
+            <div class="bottom-panel">
+                <img src="settings.png" width="50" class="icon" onclick="location.href='/settings.html'">
+                <img src="website.png" onclick="eel.webbrowser_open('https://nosleepfor.github.io')" id='website' width="50" class="icon">
+            </div>
+        </div>
+
+        
+        <script src="/eel.js"></script>
+        <script>
+
+            
+
+            eel.get_config()().then((config) => {
+                document.getElementById('nickname').innerText=config.username
+                var canvas = document.getElementById('myCanvas');
+                var ctx = canvas.getContext('2d');
+
+                // Отключаем сглаживание изображения
+                ctx.imageSmoothingEnabled = false;
+
+                // Загружаем изображение
+                var img = new Image();
+                img.onload = function() {
+                    // Координаты для обрезки изображения
+                    var cropX = 8;
+                    var cropY = 8;
+                    var cropWidth = 8; // (16 - 8)
+                    var cropHeight = 8; // (16 - 8)
+
+                    // Масштабированные размеры
+                    var scaledWidth = 50;
+                    var scaledHeight = 50;
+
+                    // Обрезаем и рисуем изображение
+                    ctx.drawImage(img, cropX, cropY, cropWidth, cropHeight, 0, 0, scaledWidth, scaledHeight);
+                    ctx.drawImage(img, 40, cropY, cropWidth, cropHeight, 0, 0, scaledWidth, scaledHeight);
+                };
+                img.src = `http://skinsystem.ely.by/skins?name=${config.username}`;
+            })
+            eel.versions()().then((vers) => {
+                vers_select=document.getElementById('versions')
+                vers.forEach(ver => {
+                    opt = document.createElement('option')
+                    opt.innerHTML = `${ver[0]} ${ver[1]}`
+                    opt.value = `${ver[0]}:${ver[1]}`
+                    vers_select.appendChild(opt)
+                });
+                document.getElementsByClassName('loader')[0].style.display = 'none';
+            })
+
+            
+            function start_progress() {
+                document.getElementsByClassName('loader')[1].style.display = 'block';
+            }
+            eel.expose(start_progress)
+            
+            function set_progress(text) {
+                document.getElementById('process').innerText = text
+            }
+            eel.expose(set_progress)
+            
+            function end_progress(text) {
+                document.getElementsByClassName('loader')[1].style.display = 'none';
+            }
+            eel.expose(end_progress)
+
+
+            document.getElementById('versions').oninput = (e) => {
+                eel.is_installed(e.target.value)().then((d) => {
+                    if (!d) {
+                        document.getElementById('play').innerText = 'Установить'
+                    } else {
+                        document.getElementById('play').innerText = 'Играть'
+                    }
+                })
+            }
+
+            document.getElementById('play').addEventListener('click', () => {
+                eel.install(document.getElementById('versions').value)
+            })
+
+        </script>
+        
+    </body>
+</html>
